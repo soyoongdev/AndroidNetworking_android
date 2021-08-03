@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/background_button.xml" value="0.146" />
+        <entry key="app/src/main/res/drawable/background_gradient.xml" value="0.1335" />
+        <entry key="app/src/main/res/drawable/custom_button_outline.xml" value="0.146" />
+        <entry key="app/src/main/res/drawable/custom_password_eye.xml" value="0.146" />
+        <entry key="app/src/main/res/drawable/edittext_line.xml" value="0.146" />
+        <entry key="app/src/main/res/drawable/eyse_visible.xml" value="0.146" />
+        <entry key="app/src/main/res/drawable/ic_facebook.xml" value="0.146" />
+        <entry key="app/src/main/res/drawable/ic_invisible.xml" value="0.1335" />
+        <entry key="app/src/main/res/drawable/ic_messenger.xml" value="0.1335" />
+        <entry key="app/src/main/res/drawable/ic_visibility.xml" value="0.146" />
+        <entry key="app/src/main/res/layout/activity_login_manager.xml" value="0.21639344262295082" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.26724243164062506" />
+        <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.28229166666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
