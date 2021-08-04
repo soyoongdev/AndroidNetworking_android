@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@drawable/ic_messenger"/>
+            android:src="@drawable/messenger"/>
 
         <TextView
             android:fontFamily="@font/main_font"

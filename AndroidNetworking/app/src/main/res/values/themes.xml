@@ -2,17 +2,6 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- enable window content transitions -->
-        <item name="android:windowActivityTransitions">true</item>
-
-        <!-- specify shared element transitions -->
-        <item name="android:windowSharedElementEnterTransition">
-            @transition/change_image_transform</item>
-        <item name="android:windowSharedElementExitTransition">
-            @transition/change_image_transform</item>
-        <!-- specify enter and exit transitions -->
-        <!-- specify enter and exit transitions -->
-        <item name="android:windowEnterTransition">@transition/change_image_transform</item>
-        <item name="android:windowExitTransition">@transition/change_image_transform</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -25,6 +14,8 @@
         <item name="android:statusBarColor"
             tools:targetApi="l">@color/color_end</item>
         <!-- Customize your theme here. -->
+        <item name="colorControlNormal">@color/light_gray</item>
+        <item name="colorControlActivated">@color/color_end</item>
     </style>
 
 

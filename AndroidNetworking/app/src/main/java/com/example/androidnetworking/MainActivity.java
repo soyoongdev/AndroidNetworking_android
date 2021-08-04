@@ -38,10 +38,11 @@ public class MainActivity extends AppCompatActivity {
                             "email: " + user.getEmail() + "\n" +
                             "date and time: " + user.getDatetime()
             );
-        } else {
-            startActivity(new Intent(MainActivity.this, LoginManagerActivity.class));
-            finish();
         }
+//        else {
+//            startActivity(new Intent(MainActivity.this, LoginManagerActivity.class));
+//            finish();
+//        }
 
         tvMain = findViewById(R.id.tvMain);
         btnLogout = findViewById(R.id.btnLogout);

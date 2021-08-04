@@ -3,22 +3,35 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/background_bottom_navigation.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/background_button.xml" value="0.146" />
+        <entry key="app/src/main/res/drawable/background_button_lineargradient.xml" value="0.2075" />
         <entry key="app/src/main/res/drawable/background_gradient.xml" value="0.1335" />
         <entry key="app/src/main/res/drawable/custom_button_outline.xml" value="0.146" />
         <entry key="app/src/main/res/drawable/custom_password_eye.xml" value="0.146" />
+        <entry key="app/src/main/res/drawable/cutom_button_linear_gradient.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/edittext_line.xml" value="0.146" />
         <entry key="app/src/main/res/drawable/eyse_visible.xml" value="0.146" />
+        <entry key="app/src/main/res/drawable/heart_selector.xml" value="0.237" />
+        <entry key="app/src/main/res/drawable/home_selected.xml" value="0.237" />
+        <entry key="app/src/main/res/drawable/home_selector.xml" value="0.1955" />
         <entry key="app/src/main/res/drawable/ic_facebook.xml" value="0.146" />
         <entry key="app/src/main/res/drawable/ic_invisible.xml" value="0.1335" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.237" />
+        <entry key="app/src/main/res/drawable/ic_left_arrow.xml" value="0.237" />
+        <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/ic_messenger.xml" value="0.1335" />
         <entry key="app/src/main/res/drawable/ic_visibility.xml" value="0.146" />
+        <entry key="app/src/main/res/drawable/noti_selector.xml" value="0.237" />
+        <entry key="app/src/main/res/drawable/profile_selector.xml" value="0.237" />
+        <entry key="app/src/main/res/layout/activity_bottom_navigation.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_login_manager.xml" value="0.21639344262295082" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.26724243164062506" />
         <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.37604166666666666" />
       </map>
     </option>
   </component>
