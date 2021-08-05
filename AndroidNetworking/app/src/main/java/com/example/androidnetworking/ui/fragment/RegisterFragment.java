@@ -25,22 +25,28 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.androidnetworking.MainActivity;
 import com.example.androidnetworking.R;
+import com.example.androidnetworking.activity.BottomNavigationActivity;
+import com.example.androidnetworking.model.ServerResponse;
 import com.example.androidnetworking.model.User;
 import com.example.androidnetworking.server_client.Constants;
 import com.example.androidnetworking.server_client.SharedPrefManager;
 import com.example.androidnetworking.server_client.VolleySingleton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -88,111 +94,74 @@ public class RegisterFragment extends Fragment {
                 String email = edtEmail.getText().toString().trim();
                 String password = edtPassword.getText().toString().trim();
                 String confirmPass = edtConfirmPass.getText().toString().trim();
-                String result = "";
 
-                if (!validateForm(username, email, password, confirmPass, result)) {
+                if (!validateForm(username, email, password, confirmPass)) {
                     // if check false
                     return;
                 } else {
-                    registerProgress(username, email, password);
+                    registerUser(username, email, password);
                 }
             }
         });
     }
 
-    private void reg(String email, String pass, String name) {
-        StringRequest request = new StringRequest(Request.Method.POST, Constants.URL_REGISTER, response -> {
-            if (response.equalsIgnoreCase("Successfully")) {
-                try {
-                    Toast.makeText(getActivity(), "User created successfully!!", Toast.LENGTH_SHORT).show();
-                    edtUsername.setText("");
-                    edtEmail.setText("");
-                    edtPassword.setText("");
-                    edtConfirmPass.setText("");
-                    //getting the user from the response
-                    JSONObject obj = new JSONObject(response);
-                    JSONObject userJson = obj.getJSONObject("user");
-
-                    //creating a new user object
-                    User user = new User(
-                            userJson.getInt("id"),
-                            userJson.getString("username"),
-                            userJson.getString("email"),
-                            userJson.getString("created_at")
-                    );
-                    Log.i(TAG, "Result :" + obj.get("message"));
-                    //storing the user in shared preferences
-                    SharedPrefManager.getInstance(getActivity()).userLogin(user);
-                    Log.i(TAG, "User== " + user.getUsername() + "\n" + user.getEmail() + "\n" + user.getDatetime());
-                    currentFragment(new LoginFragment());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                Toast.makeText(getActivity(), "Đăng kí thất bại", Toast.LENGTH_LONG).show();
-            }
-        }, error -> {
-            Toast.makeText(getActivity(), "Error" + error.getMessage(), Toast.LENGTH_LONG).show();
-
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("email", email);
-                params.put("pass", pass);
-                params.put("name", name);
-
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(request);
-    }
-
-    private void registerProgress(String username, String email, String password) {
+    private void registerUser(String username, String email, String password) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_REGISTER,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.e(TAG, "StringRequest onResponse: " + response);
+//                        Toast.makeText(getActivity(), "result: " + response, Toast.LENGTH_SHORT).show();
                         try {
-                            if (response.equalsIgnoreCase("Successfully")) {
+                            JSONObject jsonObject = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                            boolean resultError = jsonObject.getBoolean("error");
+                            String message = jsonObject.getString("message");
+                            ServerResponse serverResponse = new ServerResponse(resultError, message);
+                            if (serverResponse.getState() == false) {
+                                // User node is JSON object
+                                JSONObject objUser = jsonObject.getJSONObject("user");
+                                int id = objUser.getInt("id");
+                                String username = objUser.getString("username");
+                                String email = objUser.getString("email");
+                                String created_at = objUser.getString("created_at");
+
+                                Log.i(TAG, "Id: " + id);
+                                Log.i(TAG, "Username: " + username);
+                                Log.i(TAG, "Email: " + email);
+                                Log.i(TAG, "Created_at: " + created_at);
+                                Log.i(TAG, "State: " + serverResponse.getState());
+                                Log.i(TAG, "Message: " + serverResponse.getMessage());
 
                                 //getting the user from the response
-                                JSONObject obj = new JSONObject(response);
-                                JSONObject userJson = obj.getJSONObject("user");
-
                                 //creating a new user object
-                                User user = new User(
-                                        userJson.getInt("id"),
-                                        userJson.getString("username"),
-                                        userJson.getString("email"),
-                                        userJson.getString("created_at")
-                                );
-                                Log.i(TAG, "Result :" + obj.get("message"));
-                                //storing the user in shared preferences
-                                SharedPrefManager.getInstance(getActivity()).userLogin(user);
-                                Log.i(TAG, "User== " + user.getUsername() + "\n" + user.getEmail() + "\n" + user.getDatetime());
+                                User user = new User(id, username, email, created_at);
+                                serverResponse.setUser(user);
 
-                                Toast.makeText(getActivity(), "User created successfully!!", Toast.LENGTH_SHORT).show();
+                                //storing the user in shared preferences
+                                SharedPrefManager.getInstance(getActivity()).userLogin(serverResponse.getUser());
+                                Toast.makeText(getActivity(), "User created successfully!", Toast.LENGTH_SHORT).show();
                                 edtUsername.setText("");
                                 edtEmail.setText("");
                                 edtPassword.setText("");
                                 edtConfirmPass.setText("");
-                                currentFragment(new LoginFragment());
+                                // start activity
+                                startActivity(new Intent(getActivity(), MainActivity.class));
                             } else {
-                                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_SHORT).show();
                             }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e(TAG, e.getMessage());
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                        error.printStackTrace();
+                        Log.e(TAG, "StringRequest onErrorResponse: " + error.getMessage());
+                        Snackbar.make(getView(), error.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
@@ -204,40 +173,36 @@ public class RegisterFragment extends Fragment {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(stringRequest);
-//            VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
+
+        VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
     }
 
-
-    private boolean validateForm(String username, String email, String password, String confirmPass, String result) {
+    private boolean validateForm(String username, String email, String password, String confirmPass) {
         // Check empty form
         if (TextUtils.isEmpty(username)) {
             edtUsername.setError("Please enter username!!");
             edtUsername.requestFocus();
             return false;
-        } else if (TextUtils.isEmpty(email)) {
+        }
+        if (TextUtils.isEmpty(email)) {
             edtEmail.setError("Please enter email!!");
             edtEmail.requestFocus();
             return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             edtEmail.setError("Enter a valid email!!");
             edtEmail.requestFocus();
             return false;
-        } else if (TextUtils.isEmpty(password)) {
+        }
+        if (TextUtils.isEmpty(password)) {
             edtPassword.setError("Please enter password!!");
             edtPassword.requestFocus();
             return false;
-        } else if (TextUtils.isEmpty(confirmPass)) {
+        }
+        if (TextUtils.isEmpty(confirmPass)) {
             edtConfirmPass.setError("Please enter edtConfirmPass!!");
             edtConfirmPass.requestFocus();
             return false;
-        } else {
-            if (!password.equalsIgnoreCase(confirmPass)) {
-                edtConfirmPass.setError("Passwords are not the same!!");
-                edtConfirmPass.requestFocus();
-                return false;
-            }
         }
         return true;
     }

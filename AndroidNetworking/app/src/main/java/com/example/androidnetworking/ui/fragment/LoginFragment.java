@@ -1,11 +1,14 @@
 package com.example.androidnetworking.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.androidnetworking.MainActivity;
 import com.example.androidnetworking.R;
+import com.example.androidnetworking.activity.BottomNavigationActivity;
+import com.example.androidnetworking.model.ServerResponse;
 import com.example.androidnetworking.model.User;
 import com.example.androidnetworking.server_client.Constants;
 import com.example.androidnetworking.server_client.SharedPrefManager;
@@ -69,7 +74,12 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 final String email = edtEmail.getText().toString();
                 final String password = edtPassword.getText().toString();
-                loginProgress(email, password);
+                if (!validateForm(email, password)) {
+                    // if check false
+                    return;
+                } else {
+                    loginProgress(email, password);
+                }
             }
         });
 
@@ -77,6 +87,13 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 currentFragment(new RegisterFragment());
+            }
+        });
+
+        linearRegisterFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "Login with  facebook clicked!!");
             }
         });
     }
@@ -89,31 +106,35 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            //converting response to json object
+                            JSONObject jsonObject = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                            Log.i(TAG, "Response: " + jsonObject);
+                            boolean resultError = jsonObject.getBoolean("error");
+                            String message = jsonObject.getString("message");
+                            ServerResponse serverResponse = new ServerResponse(resultError, message);
+                            Log.i(TAG, "Server response state: " + serverResponse.getState());
+                            Log.i(TAG, "Server response message: " + serverResponse.getMessage());
+                            if (serverResponse.getState() == false) {
+                                JSONObject objUser = jsonObject.getJSONObject("user");
+                                int id = objUser.getInt("id");
+                                String username = objUser.getString("username");
+                                String email = objUser.getString("email");
+                                String created_at = objUser.getString("created_at");
+                                User user = new User(id, username, email, created_at);
+                                serverResponse.setUser(user);
 
-                            JSONObject obj = new JSONObject(response);
-                            if (response.equalsIgnoreCase("Successfully")) {
-                                Toast.makeText(getActivity(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-                                //getting the user from the response
-                                JSONObject userJson = obj.getJSONObject("user");
+                                Log.i(TAG, "Id: " + serverResponse.getUser().getId());
+                                Log.i(TAG, "Username: " + serverResponse.getUser().getUsername());
+                                Log.i(TAG, "Email: " + serverResponse.getUser().getEmail());
+                                Log.i(TAG, "created at: " + serverResponse.getUser().getDatetime());
 
-                                //creating a new user object
-                                User user = new User(
-                                        userJson.getInt("id"),
-                                        userJson.getString("username"),
-                                        userJson.getString("email"),
-                                        userJson.getString("datetime")
-                                );//storing the user in shared preferences
                                 SharedPrefManager.getInstance(getActivity()).userLogin(user);
-                                //starting the profile activity
-                                startActivity(new Intent(getActivity(), MainActivity.class));
-                                getActivity().finish();
-                            }else {
-                                Toast.makeText(getActivity(),"Error",Toast.LENGTH_LONG).show();
-                            }
+                                Toast.makeText(getActivity(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                                startActivity();
 
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e(TAG, e.getMessage());
                         }
                     }
                 },
@@ -138,6 +159,26 @@ public class LoginFragment extends Fragment {
 
     }
 
+    private boolean validateForm(String email, String password) {
+        // Check empty form
+        if (TextUtils.isEmpty(email)) {
+            edtEmail.setError("Please enter email!!");
+            edtEmail.requestFocus();
+            return false;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            edtEmail.setError("Enter a valid email!!");
+            edtEmail.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(password)) {
+            edtPassword.setError("Please enter password!!");
+            edtPassword.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
     private void currentFragment(Fragment fragment) {
 
         getActivity().getSupportFragmentManager()
@@ -146,5 +187,10 @@ public class LoginFragment extends Fragment {
                 .replace(R.id.frame_login, fragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private void startActivity() {
+        startActivity(new Intent(getActivity(), BottomNavigationActivity.class));
+        getActivity().finish();
     }
 }

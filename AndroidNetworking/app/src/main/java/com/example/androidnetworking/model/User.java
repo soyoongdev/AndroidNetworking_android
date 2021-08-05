@@ -4,7 +4,6 @@ public class User {
     private int id;
     private String username;
     private String email;
-    private String password;
     private String datetime;
 
     public User(int id, String username, String email, String datetime) {
@@ -36,14 +35,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getDatetime() {

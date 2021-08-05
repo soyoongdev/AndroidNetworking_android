@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/light_white"
-    tools:context=".ui.fragment.LoginFragment">
+    tools:context=".ui.fragment.RegisterFragment">
 
     <LinearLayout
         android:layout_marginVertical="20dp"
@@ -24,7 +24,6 @@
 
             <ImageView
                 android:id="@+id/imgBackToLogin"
-                android:layout_marginLeft="10dp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:textColor="@color/black"
@@ -49,7 +48,7 @@
 
         <LinearLayout
             android:gravity="center_horizontal"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="60dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -58,65 +57,60 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                app:endIconMode="clear_text">
+                style="@style/StyleTextInputNormal">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_username_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:hint="Username"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:hint="Enter Username"
+                    android:ems="10"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:foregroundTint="@color/color_end"
-                app:endIconMode="clear_text">
+                style="@style/StyleTextInputNormal">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_email_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:hint="Email"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:hint="Enter Email"
+                    android:ems="10" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/StyleTextInputPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                app:passwordToggleEnabled="true">
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_password_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Password"
-                    android:textSize="16sp"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:hint="Enter Password"
+                    android:ems="10"
+                    android:textSize="16sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/StyleTextInputPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                app:passwordToggleEnabled="true">
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_confirmPassword_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:hint="Confirm Password"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:ems="10"
+                    android:hint="Enter confirm password" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../../../layout/custom_preview.xml" value="0.40260416666666665" />
         <entry key="app/src/main/res/drawable/background_bottom_navigation.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/background_button.xml" value="0.146" />
         <entry key="app/src/main/res/drawable/background_button_lineargradient.xml" value="0.2075" />
@@ -24,12 +25,18 @@
         <entry key="app/src/main/res/drawable/ic_visibility.xml" value="0.146" />
         <entry key="app/src/main/res/drawable/noti_selector.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/profile_selector.xml" value="0.237" />
+        <entry key="app/src/main/res/drawable/show_hide_password.xml" value="0.2615" />
         <entry key="app/src/main/res/layout/activity_bottom_navigation.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_login_manager.xml" value="0.21639344262295082" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.26724243164062506" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/fragment_heart.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.37604166666666666" />
       </map>
