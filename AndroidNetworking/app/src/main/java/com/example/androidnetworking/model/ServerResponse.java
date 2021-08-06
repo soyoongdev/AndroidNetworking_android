@@ -4,6 +4,15 @@ public class ServerResponse {
     private boolean state;
     private String message;
     private User user;
+    public boolean isState() {
+        return state;
+    }
+
+    public ServerResponse(boolean state, String message, User user) {
+        this.state = state;
+        this.message = message;
+        this.user = user;
+    }
 
     public ServerResponse(boolean state, String message) {
         this.state = state;

@@ -27,7 +27,6 @@
 
     </style>
 
-
     <style name="Theme.SplashScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>

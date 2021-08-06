@@ -1,7 +1,10 @@
 package com.example.androidnetworking.ui.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +51,15 @@ public class LoginFragment extends Fragment {
     private Button btnLogin, btnForgotPass;
     private TextView tvSignUp;
     private LinearLayout linearRegisterFacebook;
+    private CheckBox saveLoginCheckBox;
+    private SharedPreferences loginPreferences;
+    private SharedPreferences.Editor loginPrefsEditor;
+    private Boolean saveLogin;
+
+    String LOGIN_PREF = "loginPrefs";
+    String SAVE_LOGIN = "saveLogin";
+    String EMAIL_SAVE = "email_pref";
+    String PASSWORD_SAVE = "password_pref";
 
 
     @Override
@@ -68,6 +81,15 @@ public class LoginFragment extends Fragment {
         btnForgotPass = view.findViewById(R.id.btn_forgotPassword_login);
         tvSignUp = view.findViewById(R.id.tv_signup_login);
         linearRegisterFacebook = view.findViewById(R.id.linear_registerWithFacebook_login);
+        saveLoginCheckBox = (CheckBox) view.findViewById(R.id.saveLoginCheckBox);
+
+        loginPreferences = getActivity().getSharedPreferences(LOGIN_PREF, MODE_PRIVATE);
+        loginPrefsEditor = loginPreferences.edit();
+
+        saveLogin = loginPreferences.getBoolean("saveLogin", false);
+        if (saveLogin == true) {
+            startActivity();
+        }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,8 +100,10 @@ public class LoginFragment extends Fragment {
                     // if check false
                     return;
                 } else {
+
                     loginProgress(email, password);
                 }
+
             }
         });
 
@@ -138,6 +162,16 @@ public class LoginFragment extends Fragment {
 
                                 SharedPrefManager.getInstance(getActivity()).userLogin(user);
                                 Toast.makeText(getActivity(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                                if (saveLoginCheckBox.isChecked()) {
+                                    loginPrefsEditor.putBoolean(SAVE_LOGIN, true);
+                                    loginPrefsEditor.putString(EMAIL_SAVE, email);
+                                    loginPrefsEditor.putString(PASSWORD_SAVE, password);
+                                    loginPrefsEditor.commit();
+                                    Snackbar.make(getView(),"Has been scored: " + email, Snackbar.LENGTH_SHORT).show();
+                                } else {
+                                    loginPrefsEditor.clear();
+                                    loginPrefsEditor.commit();
+                                }
                                 startActivity();
 
                             }

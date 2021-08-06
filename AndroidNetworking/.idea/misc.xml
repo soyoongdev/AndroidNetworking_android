@@ -7,10 +7,12 @@
         <entry key="app/src/main/res/drawable/background_bottom_navigation.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/background_button.xml" value="0.146" />
         <entry key="app/src/main/res/drawable/background_button_lineargradient.xml" value="0.2075" />
+        <entry key="app/src/main/res/drawable/background_button_maincolor.xml" value="0.2185" />
         <entry key="app/src/main/res/drawable/background_gradient.xml" value="0.1335" />
         <entry key="app/src/main/res/drawable/custom_button_outline.xml" value="0.146" />
         <entry key="app/src/main/res/drawable/custom_password_eye.xml" value="0.146" />
         <entry key="app/src/main/res/drawable/cutom_button_linear_gradient.xml" value="0.237" />
+        <entry key="app/src/main/res/drawable/direct_download.xml" value="0.2185" />
         <entry key="app/src/main/res/drawable/edittext_line.xml" value="0.146" />
         <entry key="app/src/main/res/drawable/eyse_visible.xml" value="0.146" />
         <entry key="app/src/main/res/drawable/heart_selector.xml" value="0.237" />
@@ -30,6 +32,7 @@
         <entry key="app/src/main/res/layout/activity_login_manager.xml" value="0.21639344262295082" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.26724243164062506" />
+        <entry key="app/src/main/res/layout/alert_insert_product_layout.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/fragment_check_email.xml" value="0.37604166666666666" />
