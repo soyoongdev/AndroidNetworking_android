@@ -13,6 +13,7 @@ public class SharedPrefManager {
     private static final String KEY_USERNAME = "key_username";
     private static final String KEY_EMAIL = "key_email";
     private static final String KEY_DATETIME = "key_datetime";
+    private static final String KEY_UPDATE_TIME = "key_update_time";
     private static SharedPrefManager mInstance;
     private static Context ctx;
 
@@ -34,6 +35,7 @@ public class SharedPrefManager {
         editor.putString(KEY_USERNAME, user.getUsername());
         editor.putString(KEY_EMAIL, user.getEmail());
         editor.putString(KEY_DATETIME, user.getDatetime());
+        editor.putString(KEY_UPDATE_TIME, user.getUpdated_at());
         editor.apply();
     }
 
@@ -50,7 +52,8 @@ public class SharedPrefManager {
                 sharedPreferences.getInt(KEY_ID, -1),
                 sharedPreferences.getString(KEY_USERNAME, null),
                 sharedPreferences.getString(KEY_EMAIL, null),
-                sharedPreferences.getString(KEY_DATETIME, null)
+                sharedPreferences.getString(KEY_DATETIME, null),
+                sharedPreferences.getString(KEY_UPDATE_TIME, null)
         );
     }
 

@@ -125,28 +125,32 @@ public class RegisterFragment extends Fragment {
                                 String username = objUser.getString("username");
                                 String email = objUser.getString("email");
                                 String created_at = objUser.getString("created_at");
+                                String updated_at = objUser.getString("updated_at");
 
+                                Log.i(TAG, "State: " + serverResponse.getState());
+                                Log.i(TAG, "Message: " + serverResponse.getMessage());
                                 Log.i(TAG, "Id: " + id);
                                 Log.i(TAG, "Username: " + username);
                                 Log.i(TAG, "Email: " + email);
                                 Log.i(TAG, "Created_at: " + created_at);
-                                Log.i(TAG, "State: " + serverResponse.getState());
-                                Log.i(TAG, "Message: " + serverResponse.getMessage());
+                                Log.i(TAG, "Updated_at: " + updated_at);
+
 
                                 //getting the user from the response
                                 //creating a new user object
-                                User user = new User(id, username, email, created_at);
+                                User user = new User(id, username, email, created_at, updated_at);
                                 serverResponse.setUser(user);
 
                                 //storing the user in shared preferences
                                 SharedPrefManager.getInstance(getActivity()).userLogin(serverResponse.getUser());
-                                Toast.makeText(getActivity(), "User created successfully!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                                 edtUsername.setText("");
                                 edtEmail.setText("");
                                 edtPassword.setText("");
                                 edtConfirmPass.setText("");
                                 // start activity
-                                startActivity(new Intent(getActivity(), MainActivity.class));
+                                startActivity(new Intent(getActivity(), BottomNavigationActivity.class));
+                                getActivity().finish();
                             } else {
                                 Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_SHORT).show();
                             }

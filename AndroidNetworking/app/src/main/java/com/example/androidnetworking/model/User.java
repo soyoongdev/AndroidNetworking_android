@@ -5,12 +5,29 @@ public class User {
     private String username;
     private String email;
     private String datetime;
+    private String updated_at;
+
+    public User(int id, String username, String email, String datetime, String updated_at) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.datetime = datetime;
+        this.updated_at = updated_at;
+    }
 
     public User(int id, String username, String email, String datetime) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.datetime = datetime;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 
     public int getId() {

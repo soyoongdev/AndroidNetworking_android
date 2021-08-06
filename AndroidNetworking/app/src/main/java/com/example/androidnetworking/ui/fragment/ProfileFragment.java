@@ -24,7 +24,7 @@ import org.w3c.dom.Text;
 public class ProfileFragment extends Fragment {
     String TAG = "ProfileFragment";
     private Button btnLogout;
-    private TextView tvId, tvUsername, tvEmail, tvCreatedAt;
+    private TextView tvId, tvUsername, tvEmail, tvCreatedAt, tvUpdatedAt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +40,7 @@ public class ProfileFragment extends Fragment {
         tvUsername = view.findViewById(R.id.tvUsername_profile);
         tvEmail = view.findViewById(R.id.tvEmail_profile);
         tvCreatedAt = view.findViewById(R.id.tvCreatedAt_profile);
+        tvUpdatedAt = view.findViewById(R.id.tvUpdatedAt_profile);
         btnLogout = view.findViewById(R.id.btnLogout_profile);
 
         if (SharedPrefManager.getInstance(getActivity()).isLoggedIn()) {
@@ -49,6 +50,7 @@ public class ProfileFragment extends Fragment {
             tvEmail.setText("Email: " + user.getEmail());
             tvUsername.setText("Username: " + user.getUsername());
             tvCreatedAt.setText("Created at: " + user.getDatetime());
+            tvUpdatedAt.setText("Updated at: " + user.getUpdated_at());
         }
         else {
             startActivity(new Intent(getActivity(), LoginManagerActivity.class));

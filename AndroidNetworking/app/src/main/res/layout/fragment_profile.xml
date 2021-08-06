@@ -42,6 +42,14 @@
             android:textSize="16sp"
             android:text="Crated at: " />
 
+        <TextView
+            android:id="@+id/tvUpdatedAt_profile"
+            android:layout_gravity="left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Updated at: " />
+
 
         <Button
             android:id="@+id/btnLogout_profile"

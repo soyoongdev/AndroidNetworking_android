@@ -32,6 +32,7 @@ import com.example.androidnetworking.model.User;
 import com.example.androidnetworking.server_client.Constants;
 import com.example.androidnetworking.server_client.SharedPrefManager;
 import com.example.androidnetworking.server_client.VolleySingleton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
@@ -42,7 +43,6 @@ import java.util.Map;
 
 public class LoginFragment extends Fragment {
     String TAG = "LoginFragment";
-    public static TextView tvWelcome;
     private TextInputEditText edtEmail, edtPassword;
     private Button btnLogin, btnForgotPass;
     private TextView tvSignUp;
@@ -56,7 +56,7 @@ public class LoginFragment extends Fragment {
         initViews(view);
         if (SharedPrefManager.getInstance(getActivity()).isLoggedIn()) {
             getActivity().finish();
-            startActivity(new Intent(getActivity(), MainActivity.class));
+            startActivity(new Intent(getActivity(), BottomNavigationActivity.class));
         }
         return view;
     }
@@ -96,6 +96,13 @@ public class LoginFragment extends Fragment {
                 Log.i(TAG, "Login with  facebook clicked!!");
             }
         });
+
+        btnForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentFragment(new CheckEmailFragment());
+            }
+        });
     }
 
 
@@ -119,13 +126,15 @@ public class LoginFragment extends Fragment {
                                 String username = objUser.getString("username");
                                 String email = objUser.getString("email");
                                 String created_at = objUser.getString("created_at");
-                                User user = new User(id, username, email, created_at);
+                                String updated_at = objUser.getString("updated_at");
+                                User user = new User(id, username, email, created_at, updated_at);
                                 serverResponse.setUser(user);
 
                                 Log.i(TAG, "Id: " + serverResponse.getUser().getId());
                                 Log.i(TAG, "Username: " + serverResponse.getUser().getUsername());
                                 Log.i(TAG, "Email: " + serverResponse.getUser().getEmail());
-                                Log.i(TAG, "created at: " + serverResponse.getUser().getDatetime());
+                                Log.i(TAG, "Created at: " + serverResponse.getUser().getDatetime());
+                                Log.i(TAG, "Updated at: " + serverResponse.getUser().getUpdated_at());
 
                                 SharedPrefManager.getInstance(getActivity()).userLogin(user);
                                 Toast.makeText(getActivity(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
@@ -135,17 +144,17 @@ public class LoginFragment extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e(TAG, e.getMessage());
+                            Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, "Result error: " + error.getMessage() );
+                        Log.e(TAG, "Result error: " + error.getMessage());
 
                     }
-                })
-        {
+                }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -156,7 +165,6 @@ public class LoginFragment extends Fragment {
         };
 
         VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
-
     }
 
     private boolean validateForm(String email, String password) {

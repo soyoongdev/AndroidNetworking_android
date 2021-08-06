@@ -1,13 +1,13 @@
 package com.example.androidnetworking.ui.fragment;
 
-import android.media.Image;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,48 +35,25 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChangePasswordFragment extends Fragment {
-    String TAG = "ChangePasswordFragment";
-    private EditText edtPassword, edtConfirmPass;
-    private Button btnSubmit;
+public class CheckEmailFragment extends Fragment {
+    String TAG = "CheckEmailFragment";
+    private EditText email;
+    private Button btnCheck;
     private ImageView imgBack;
-    String email = "";
-    String result = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_change_password, container, false);
-        Bundle bundle = this.getArguments();
-        if (bundle!=null){
-            Log.i(TAG, "Email bundle: " + bundle.getString("email_"));
-            email = bundle.getString("email_");
-        }
+        View view = inflater.inflate(R.layout.fragment_check_email, container, false);
         initViews(view);
-
         return view;
     }
 
     private void initViews(View view) {
-        edtPassword = view.findViewById(R.id.edtChangePass);
-        edtConfirmPass = view.findViewById(R.id.edtChangeConfirmPass);
-        btnSubmit = view.findViewById(R.id.btnResetEmail);
-        imgBack = view.findViewById(R.id.imgBackToLoginChangePass);
-
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (validateForm(edtPassword.getText().toString(), edtConfirmPass.getText().toString()) == false) {
-                    // if check false
-                    Snackbar.make(getView(), result, Snackbar.LENGTH_SHORT).show();
-                    return;
-                } else {
-                    changePasswordProgress(email, edtConfirmPass.getText().toString());
-                }
-            }
-        });
-
+        email = view.findViewById(R.id.edtEmailCheck);
+        btnCheck = view.findViewById(R.id.btnCheckEmail);
+        imgBack = view.findViewById(R.id.imgBackToLoginCheckEmail);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,11 +62,22 @@ public class ChangePasswordFragment extends Fragment {
             }
         });
 
+        btnCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!TextUtils.isEmpty(email.getText().toString())){
+                    checkUser(email.getText().toString());
+                }else {
+                    Snackbar.make(getView(), "Please enter email!", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
-    private void changePasswordProgress(String email, String password) {
+    private void checkUser(String email) {
         //if everything is fine
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_CHANGE_PASSWORD,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_CHECK_USER,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -108,20 +96,20 @@ public class ChangePasswordFragment extends Fragment {
                                 String email = objUser.getString("email");
                                 String created_at = objUser.getString("created_at");
                                 String updated_at = objUser.getString("updated_at");
-                                User user = new User(id, username, email, created_at, updated_at);
-                                serverResponse.setUser(user);
 
-                                Log.i(TAG, "Id: " + serverResponse.getUser().getId());
-                                Log.i(TAG, "Username: " + serverResponse.getUser().getUsername());
-                                Log.i(TAG, "Email: " + serverResponse.getUser().getEmail());
-                                Log.i(TAG, "created at: " + serverResponse.getUser().getDatetime());
-                                Log.i(TAG, "updated at: " + serverResponse.getUser().getUpdated_at());
-
-                                edtPassword.setText("");
-                                edtConfirmPass.setText("");
+                                Log.i(TAG, "Id: " + id);
+                                Log.i(TAG, "Username: " + username);
+                                Log.i(TAG, "Email: " + email);
+                                Log.i(TAG, "created at: " + created_at);
+                                Log.i(TAG, "updated at: " + updated_at);
 
                                 Toast.makeText(getActivity(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                                currentFragment(new LoginFragment());
+                                Bundle bundle = new Bundle();
+                                bundle.putString("email_", email);
+                                ChangePasswordFragment changePasswordFragment = new ChangePasswordFragment();
+                                changePasswordFragment.setArguments(bundle);
+                                currentFragment(changePasswordFragment);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -141,16 +129,15 @@ public class ChangePasswordFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("email", email);
-                params.put("password", password);
                 return params;
             }
         };
 
         VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
+
     }
 
     private void currentFragment(Fragment fragment) {
-
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right)
@@ -159,24 +146,4 @@ public class ChangePasswordFragment extends Fragment {
                 .commit();
     }
 
-    private boolean validateForm(String password, String ConfirmPassword) {
-        // Check empty form
-        if (TextUtils.isEmpty(password)) {
-            result  = "Please enter password!!";
-            return false;
-        }
-        if (TextUtils.isEmpty(ConfirmPassword)) {
-            result = "Please enter ConfirmPassword!!";
-            return false;
-        }
-        if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(ConfirmPassword)) {
-            if (password.equalsIgnoreCase(ConfirmPassword)) {
-                return true;
-            }else {
-                result = "Confirm Password is not matches!";
-                return false;
-            }
-        }
-        return false;
-    }
 }
