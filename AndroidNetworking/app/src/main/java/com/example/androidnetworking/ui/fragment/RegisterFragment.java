@@ -53,9 +53,6 @@ import java.util.Map;
 public class RegisterFragment extends Fragment {
     String TAG = "RegisterFragment";
     private TextInputEditText edtUsername, edtEmail, edtPassword, edtConfirmPass;
-    private Button btnRegister;
-    private ImageView imgBack;
-    private LinearLayout linearRegisterFacebook;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,9 +73,9 @@ public class RegisterFragment extends Fragment {
         edtEmail = view.findViewById(R.id.edt_email_register);
         edtPassword = view.findViewById(R.id.edt_password_register);
         edtConfirmPass = view.findViewById(R.id.edt_confirmPassword_register);
-        btnRegister = view.findViewById(R.id.btn_register_register);
-        imgBack = view.findViewById(R.id.imgBackToLogin);
-        linearRegisterFacebook = view.findViewById(R.id.linear_register_register);
+        Button btnRegister = view.findViewById(R.id.btn_register_register);
+        ImageView imgBack = view.findViewById(R.id.imgBackToLogin);
+        LinearLayout linearRegisterFacebook = view.findViewById(R.id.linear_register_register);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

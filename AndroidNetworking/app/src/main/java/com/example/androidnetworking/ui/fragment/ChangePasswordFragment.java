@@ -77,11 +77,15 @@ public class ChangePasswordFragment extends Fragment {
             }
         });
 
-
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentFragment(new LoginFragment());
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left)
+                        .replace(R.id.frame_login, new CheckEmailFragment())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -153,7 +157,7 @@ public class ChangePasswordFragment extends Fragment {
 
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right)
+                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left)
                 .replace(R.id.frame_login, fragment)
                 .addToBackStack(null)
                 .commit();
