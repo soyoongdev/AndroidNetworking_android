@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".bai1.bai1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="30dp"
+        android:text="Learn HTTP Using GET"/>
+
+    <EditText
+        android:id="@+id/edtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name.."
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/edtScore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Score.."
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/btnSubMit"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/teal_700"/>
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Result"
+        android:textColor="@color/teal_700"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout
+        android:layout_marginTop="220dp"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnBai2"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next to bai2"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/cardview_dark_background"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
